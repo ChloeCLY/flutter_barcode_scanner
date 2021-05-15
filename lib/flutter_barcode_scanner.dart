@@ -23,8 +23,17 @@ class FlutterBarcodeScanner {
   /// Shows a scan line with [lineColor] over a scan window. A flash icon is
   /// displayed if [isShowFlashIcon] is true. The text of the cancel button can
   /// be customized with the [cancelButtonText] string.
-  static Future<String> scanBarcode(String lineColor, String cancelButtonText,
-      bool isShowFlashIcon, ScanMode scanMode) async {
+  static Future<String> scanBarcode(
+      String lineColor,
+      String cancelButtonText,
+      String grantAlertTitle,
+      String grantAlertMessage,
+      String grantButtonText,
+      String grantCancelButtonText,
+      String cameraNotAvailableTitle,
+      String cameraNotAvailableMessage,
+      bool isShowFlashIcon,
+      ScanMode scanMode) async {
     if (cancelButtonText.isEmpty) {
       cancelButtonText = 'Cancel';
     }
@@ -33,6 +42,12 @@ class FlutterBarcodeScanner {
     Map params = <String, dynamic>{
       'lineColor': lineColor,
       'cancelButtonText': cancelButtonText,
+      'grantAlertTitle': grantAlertTitle,
+      'grantAlertMessage': grantAlertMessage,
+      'grantButtonText': grantButtonText,
+      'grantCancelButtonText': grantCancelButtonText,
+      'cameraNotAvailableTitle': cameraNotAvailableTitle,
+      'cameraNotAvailableMessage': cameraNotAvailableMessage,
       'isShowFlashIcon': isShowFlashIcon,
       'isContinuousScan': false,
       'scanMode': scanMode.index
@@ -51,8 +66,17 @@ class FlutterBarcodeScanner {
   /// displayed if [isShowFlashIcon] is true. The text of the cancel button can
   /// be customized with the [cancelButtonText] string. Returns a stream of
   /// detected barcode strings.
-  static Stream? getBarcodeStreamReceiver(String lineColor,
-      String cancelButtonText, bool isShowFlashIcon, ScanMode scanMode) {
+  static Stream? getBarcodeStreamReceiver(
+      String lineColor,
+      String cancelButtonText,
+      String grantAlertTitle,
+      String grantAlertMessage,
+      String grantButtonText,
+      String grantCancelButtonText,
+      String cameraNotAvailableTitle,
+      String cameraNotAvailableMessage,
+      bool isShowFlashIcon,
+      ScanMode scanMode) {
     if (cancelButtonText.isEmpty) {
       cancelButtonText = 'Cancel';
     }
@@ -61,6 +85,12 @@ class FlutterBarcodeScanner {
     Map params = <String, dynamic>{
       'lineColor': lineColor,
       'cancelButtonText': cancelButtonText,
+      'grantAlertTitle': grantAlertTitle,
+      'grantAlertMessage': grantAlertMessage,
+      'grantButtonText': grantButtonText,
+      'grantCancelButtonText': grantCancelButtonText,
+      'cameraNotAvailableTitle': cameraNotAvailableTitle,
+      'cameraNotAvailableMessage': cameraNotAvailableMessage,
       'isShowFlashIcon': isShowFlashIcon,
       'isContinuousScan': true,
       'scanMode': scanMode.index

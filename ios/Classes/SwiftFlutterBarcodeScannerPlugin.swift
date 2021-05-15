@@ -17,6 +17,12 @@ public class SwiftFlutterBarcodeScannerPlugin: NSObject, FlutterPlugin, ScanBarc
     public static var viewController = UIViewController()
     public static var lineColor:String=""
     public static var cancelButtonText:String=""
+    public static var grantAlertTitle:String=""
+    public static var grantAlertMessage:String=""
+    public static var grantButtonText:String=""
+    public static var grantCancelButtonText:String=""
+    public static var cameraNotAvailableTitle:String=""
+    public static var cameraNotAvailableMessage:String=""
     public static var isShowFlashIcon:Bool=false
     var pendingResult:FlutterResult!
     public static var isContinuousScan:Bool=false
@@ -111,20 +117,45 @@ public class SwiftFlutterBarcodeScannerPlugin: NSObject, FlutterPlugin, ScanBarc
                                 
                             }
                         } else {
-                            let alert = UIAlertController(title: "Action needed", message: "Please grant camera permission to use barcode scanner", preferredStyle: .alert)
+                            var grantAlertTitle = args["grantAlertTitle"] as? String
+                            if (grantAlertTitle == nil) {
+                                grantAlertTitle = "Action needed"
+                            }
+                            var grantAlertMessage = args["grantAlertMessage"] as? String
+                            if (grantAlertMessage == nil) {
+                                grantAlertMessage = "Please grant camera permission to use barcode scanner"
+                            }
+                            var grantButtonText = args["grantButtonText"] as? String
+                            if (grantButtonText == nil) {
+                                grantButtonText = "Grant"
+                            }
+                            var grantCancelButtonText = args["grantCancelButtonText"] as? String
+                            if (grantCancelButtonText == nil) {
+                                grantCancelButtonText = "Cancel"
+                            }
+                            let alert = UIAlertController(title: grantAlertTitle!, message: grantAlertMessage!, preferredStyle: .alert)
                             
-                            alert.addAction(UIAlertAction(title: "Grant", style: .default, handler: { action in
+                            alert.addAction(UIAlertAction(title: grantButtonText!, style: .default, handler: { action in
                                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                             }))
                             
-                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                            alert.addAction(UIAlertAction(title: grantCancelButtonText!, style: .cancel))
                             
                             SwiftFlutterBarcodeScannerPlugin.viewController.present(alert, animated: true)
                         }
                     }
                 }}
         }else {
-            showAlertDialog(title: "Unable to proceed", message: "Camera not available")
+            var cameraNotAvailableTitle = args["cameraNotAvailableTitle"] as? String
+            if (cameraNotAvailableTitle == nil) {
+                cameraNotAvailableTitle = "Unable to proceed"
+            }
+            var cameraNotAvailableMessage = args["cameraNotAvailableMessage"] as? String
+            if (cameraNotAvailableMessage == nil) {
+                cameraNotAvailableMessage = "Camera not available"
+            }
+
+            showAlertDialog(title: cameraNotAvailableTitle!, message: cameraNotAvailableMessage!)
         }
     }
     
