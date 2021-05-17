@@ -20,8 +20,17 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> startBarcodeScanStream() async {
-    FlutterBarcodeScanner.getBarcodeStreamReceiver('#ff6666', 'Cancel', 'a',
-            'b', 'c', 'd', 'e', 'f', true, ScanMode.BARCODE)!
+    FlutterBarcodeScanner.getBarcodeStreamReceiver(
+            '#ff6666',
+            'Cancel',
+            'Action needed',
+            'Please grant camera permission to use barcode scanner',
+            'Grant',
+            'Cancel',
+            'Unable to proceed',
+            'Camera not available',
+            true,
+            ScanMode.BARCODE)!
         .listen((barcode) => print(barcode));
   }
 
