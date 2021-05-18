@@ -393,7 +393,7 @@ class BarcodeScannerViewController: UIViewController {
     private func setConstraintsForControls() {
         self.view.addSubview(bottomView)
         self.view.addSubview(cancelButton)
-        self.bottomView.addSubview(flashIcon)
+        self.view.addSubview(flashIcon)
         //self.view.addSubview(switchCameraButton)
         
         bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant:0).isActive = true
@@ -401,8 +401,8 @@ class BarcodeScannerViewController: UIViewController {
         bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:0).isActive = true
         bottomView.heightAnchor.constraint(equalToConstant:self.isOrientationPortrait ? 100.0 : 70.0).isActive=true
         
-        flashIcon.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor).isActive = true
-        flashIcon.bottomAnchor.constraint(equalTo: bottomView.topAnchor, constant: 10).isActive = true
+        flashIcon.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        flashIcon.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
         flashIcon.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
         flashIcon.widthAnchor.constraint(equalToConstant: 34.0).isActive = true
         
