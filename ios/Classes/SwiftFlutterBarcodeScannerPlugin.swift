@@ -409,8 +409,8 @@ class BarcodeScannerViewController: UIViewController {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
         cancelButton.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
-        cancelButton.topAnchor.constraint(equalTo:view.topAnchor,constant: 20).isActive=true
-        cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:-10).isActive = true
+        cancelButton.topAnchor.constraint(equalTo:view.topAnchor,constant: 30).isActive=true
+        cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:0).isActive = true
         
         //switchCameraButton.translatesAutoresizingMaskIntoConstraints = false
         // A little bit to the right.
