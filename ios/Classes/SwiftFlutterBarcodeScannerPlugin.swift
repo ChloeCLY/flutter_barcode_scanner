@@ -101,7 +101,8 @@ public class SwiftFlutterBarcodeScannerPlugin: NSObject, FlutterPlugin, ScanBarc
         if #available(iOS 13.0, *) {
             controller.modalPresentationStyle = .fullScreen
         }
-        
+        //SwiftFlutterBarcodeScannerPlugin.viewController.present(controller
+        //                                                                 , animated: true)
         if checkCameraAvailability(){
             if checkForCameraPermission() {
                 SwiftFlutterBarcodeScannerPlugin.viewController.present(controller
@@ -223,7 +224,7 @@ class BarcodeScannerViewController: UIViewController {
     /// Create and return flash button
     private lazy var flashIcon : UIButton! = {
         let flashButton = UIButton()
-        flashButton.setTitle("Flash",for:.normal)
+        //flashButton.setTitle("Flash",for:.normal)
         flashButton.translatesAutoresizingMaskIntoConstraints=false
         
         flashButton.setImage(UIImage(named: "ic_flash_off", in: Bundle(for: SwiftFlutterBarcodeScannerPlugin.self), compatibleWith: nil),for:.normal)
@@ -233,15 +234,15 @@ class BarcodeScannerViewController: UIViewController {
     }()
     
     /// Create and return switch camera button
-    private lazy var switchCameraButton : UIButton! = {
-        let button = UIButton()
+    // private lazy var switchCameraButton : UIButton! = {
+    //     let button = UIButton()
         
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "ic_switch_camera", in: Bundle(for: SwiftFlutterBarcodeScannerPlugin.self), compatibleWith: nil),for: .normal)
-        button.addTarget(self, action: #selector(BarcodeScannerViewController.switchCameraButtonClicked), for: .touchUpInside)
+    //     button.translatesAutoresizingMaskIntoConstraints = false
+    //     button.setImage(UIImage(named: "ic_switch_camera", in: Bundle(for: SwiftFlutterBarcodeScannerPlugin.self), compatibleWith: nil),for: .normal)
+    //     button.addTarget(self, action: #selector(BarcodeScannerViewController.switchCameraButtonClicked), for: .touchUpInside)
         
-        return button
-    }()
+    //     return button
+    // }()
     
     
     /// Create and return cancel button
@@ -325,7 +326,7 @@ class BarcodeScannerViewController: UIViewController {
         videoPreviewLayer?.frame = view.layer.bounds
         
         setVideoPreviewOrientation()
-        //videoPreviewLayer?.connection?.videoOrientation = self.isOrientationPortrait ? AVCaptureVideoOrientation.portrait : AVCaptureVideoOrientation.landscapeRight
+        videoPreviewLayer?.connection?.videoOrientation = self.isOrientationPortrait ? AVCaptureVideoOrientation.portrait : AVCaptureVideoOrientation.landscapeRight
         
         self.drawUIOverlays{
         }
@@ -381,7 +382,7 @@ class BarcodeScannerViewController: UIViewController {
             qrCodeFrameView.layoutSubviews()
             qrCodeFrameView.setNeedsUpdateConstraints()
             self.view.bringSubviewToFront(cancelButton)
-            self.view.bringSubviewToFront(switchCameraButton)
+            //self.view.bringSubviewToFront(switchCameraButton)
         }
         setConstraintsForControls()
         self.drawLine()
@@ -392,7 +393,7 @@ class BarcodeScannerViewController: UIViewController {
     private func setConstraintsForControls() {
         self.view.addSubview(bottomView)
         self.view.addSubview(cancelButton)
-        self.view.addSubview(flashIcon)
+        self.bottomView.addSubview(flashIcon)
         //self.view.addSubview(switchCameraButton)
         
         bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant:0).isActive = true
@@ -400,16 +401,16 @@ class BarcodeScannerViewController: UIViewController {
         bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:0).isActive = true
         bottomView.heightAnchor.constraint(equalToConstant:self.isOrientationPortrait ? 100.0 : 70.0).isActive=true
         
-        flashIcon.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        flashIcon.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
+        flashIcon.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor).isActive = true
+        flashIcon.bottomAnchor.constraint(equalTo: bottomView.topAnchor, constant: 10).isActive = true
         flashIcon.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
         flashIcon.widthAnchor.constraint(equalToConstant: 34.0).isActive = true
         
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
         cancelButton.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
-        cancelButton.topAnchor.constraint(equalTo:view.topAnchor,constant: 30).isActive=true
-        cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:-20).isActive = true
+        cancelButton.topAnchor.constraint(equalTo:view.topAnchor,constant: 20).isActive=true
+        cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:-10).isActive = true
         
         //switchCameraButton.translatesAutoresizingMaskIntoConstraints = false
         // A little bit to the right.
@@ -502,23 +503,23 @@ class BarcodeScannerViewController: UIViewController {
     }
     
     /// Switch camera button click event listener
-    @IBAction private func switchCameraButtonClicked() {
-        // Get the current active input.
-        guard let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput else { return }
-        let newPosition = getInversePosition(position: currentInput.device.position);
-        guard let device = getCaptureDeviceByPosition(position: newPosition) else { return }
-        do {
-            let newInput = try AVCaptureDeviceInput(device: device)
-            // Replace current input with the new one.
-            captureSession.removeInput(currentInput)
-            captureSession.addInput(newInput)
-            // Disable flash by default
-            setFlashStatus(device: device, mode: .off)
-        } catch let error {
-            print(error)
-            return
-        }
-    }
+    // @IBAction private func switchCameraButtonClicked() {
+    //     // Get the current active input.
+    //     guard let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput else { return }
+    //     let newPosition = getInversePosition(position: currentInput.device.position);
+    //     guard let device = getCaptureDeviceByPosition(position: newPosition) else { return }
+    //     do {
+    //         let newInput = try AVCaptureDeviceInput(device: device)
+    //         // Replace current input with the new one.
+    //         captureSession.removeInput(currentInput)
+    //         captureSession.addInput(newInput)
+    //         // Disable flash by default
+    //         setFlashStatus(device: device, mode: .off)
+    //     } catch let error {
+    //         print(error)
+    //         return
+    //     }
+    // }
     
     private func getCaptureDeviceFromCurrentSession(session: AVCaptureSession) -> AVCaptureDevice? {
         // Get the current active input.
